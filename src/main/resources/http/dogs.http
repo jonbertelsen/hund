@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:7070
+
+### GET request to example server
+GET {{baseUrl}}/
+
+### GET request to example server
+GET {{baseUrl}}/all
+
+### POST
+POST {{baseUrl}}/
+
+{
+    "name": "Bulder",
+    "breed": "POODLE",
+    "color": "red"
+}
+
+### Get by id
+GET {{baseUrl}}/1
+
