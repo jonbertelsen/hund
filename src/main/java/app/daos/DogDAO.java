@@ -20,6 +20,14 @@ public class DogDAO {
         return new ArrayList<>(dogs.values());
     }
 
+    public void clear(){
+        dogs.clear();
+    }
+
+    public Map<Long, Dog> getDogs() {
+        return dogs;
+    }
+
     public Optional<Dog> getById(long id){
         return Optional.ofNullable(dogs.get(id));
     }

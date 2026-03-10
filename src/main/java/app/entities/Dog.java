@@ -3,6 +3,8 @@ package app.entities;
 import app.enums.Breed;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Objects;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Dog {
     private Long id;
@@ -54,5 +56,22 @@ public class Dog {
 
     public void setBreed(Breed breed) {
         this.breed = breed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Dog dog = (Dog) o;
+        return Objects.equals(getId(), dog.getId()) && Objects.equals(getName(), dog.getName()) && getBreed() == dog.getBreed();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(getId());
+        result = 31 * result + Objects.hashCode(getName());
+        result = 31 * result + Objects.hashCode(getBreed());
+        return result;
     }
 }
