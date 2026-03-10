@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:7070
+@baseUrl = http://localhost:7070/dog
 
 ### GET request to example server
 GET {{baseUrl}}/
