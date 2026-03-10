@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
 import java.util.List;
 import java.util.Map;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
@@ -44,16 +45,19 @@ class RoutesTest {
 
     @Test
     void getAll() {
-        given()
+        List<Dog> expected = dogDAO.getAll();
+        List<Dog> actual = given()
                 .when()
                 .get("/all")
                 .then()
                 .statusCode(200)
-                .body("", containsInAnyOrder(
-                        Map.of("id", 1, "name", "King", "breed", "LABRADOR"),
-                        Map.of("id", 2, "name", "Mini", "breed", "DACHSHUND"),
-                        Map.of("id", 3, "name", "Boss", "breed", "FRENCHIE"),
-                        Map.of("id", 4, "name", "Osvald", "breed", "BRETON")
-                ));
+                .log().all()
+                .body("size()", is(4))
+                .body("name", containsInAnyOrder("King", "Mini", "Boss", "Osvald"))
+                .extract()
+                .jsonPath()
+                .getList("", Dog.class);
+
+        assertThat(actual, containsInAnyOrder(expected.toArray(new Dog[0])));
     }
 }
